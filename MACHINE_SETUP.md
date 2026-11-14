@@ -42,15 +42,15 @@ uv python install 3.13
 ## 4. Lấy mã nguồn
 
 ```bash
-git clone <URL bản fork> ~/ComfyUI
-cd ~/ComfyUI
+git clone -b local https://github.com/huysien/ComfyUI.git ~/Works/ComfyUI
+cd ~/Works/ComfyUI
 git remote add upstream https://github.com/Comfy-Org/ComfyUI.git
 ```
 
 ## 5. Tạo venv và cài thư viện
 
 ```bash
-cd ~/ComfyUI
+cd ~/Works/ComfyUI
 uv venv --python 3.13
 
 # PyTorch ROCm: phải cài TRƯỚC requirements.txt, nếu không pip sẽ kéo bản cho NVIDIA
@@ -81,7 +81,7 @@ Trên bản ROCm, PyTorch vẫn dùng tên `torch.cuda` và thiết bị `"cuda"
 ## 7. Chạy
 
 ```bash
-cd ~/ComfyUI
+cd ~/Works/ComfyUI
 uv run python main.py --enable-manager
 ```
 
@@ -109,7 +109,7 @@ Mở http://127.0.0.1:8188 trong trình duyệt.
 | Tải PyTorch rất chậm | Kết nối tới Cloudflare đi qua máy chủ Hồng Kông, đường quốc tế của nhà mạng bị nghẽn | `warp-cli connect` (mục 2) |
 | Bật hoặc tắt WARP giữa chừng làm hỏng lần tải đang chạy | Đổi đường mạng nên kết nối bị đứt | Chạy lại lệnh cài. Gói đã tải xong vẫn còn trong cache. Nếu báo hash mismatch hoặc corrupt: `uv cache clean torch torchvision torchaudio` |
 | `uv pip install` hoặc `--dry-run` đứng im rất lâu | Có một lệnh uv khác đang chạy và giữ khoá cache, hoặc chưa ghi rõ phiên bản torchaudio | Chờ lệnh uv kia xong. Luôn ghi `torchaudio==2.11.1` |
-| Gõ `pip install` báo `externally-managed-environment` | Ubuntu chặn cài thư viện vào Python hệ thống | Luôn dùng `uv pip` trong `~/ComfyUI`, vì uv tự tìm `.venv` |
+| Gõ `pip install` báo `externally-managed-environment` | Ubuntu chặn cài thư viện vào Python hệ thống | Luôn dùng `uv pip` trong `~/Works/ComfyUI`, vì uv tự tìm `.venv` |
 | `torch.version.hip` là `None`, ComfyUI chạy bằng CPU | Cài nhầm bản PyTorch cho NVIDIA hoặc CPU, thường do chạy `requirements.txt` trước khi cài PyTorch | `uv pip uninstall torch torchvision torchaudio`, rồi làm lại mục 5 theo đúng thứ tự |
 | `source .venv/bin/activate` chạy trong Claude Code (gõ `!`) nhưng không có tác dụng | Mỗi lệnh `!` chạy trong một shell riêng | Dùng `uv run python ...` thay cho `python ...` |
 | `torch.cuda.is_available()` là `False` dù đã lắp card | Chưa có quyền `render`/`video`, hoặc chưa khởi động lại máy sau khi thêm quyền | Mục 1, rồi đăng xuất và đăng nhập lại |
